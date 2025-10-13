@@ -1,0 +1,191 @@
+{
+  "nodes": {
+    "db_primary": {
+      "type": "imported"
+    },
+    "db_replica_1": {
+      "type": "imported"
+    },
+    "db_replica_2": {
+      "type": "imported"
+    },
+    "db_cluster": {
+      "type": "derived",
+      "rule": "threshold_rollup",
+      "params": {
+        "red_threshold": 2,
+        "yellow_to_yellow": 1,
+        "yellow_to_red": 3
+      },
+      "dependencies": ["db_primary", "db_replica_1", "db_replica_2"]
+    },
+    "cache_node_1": {
+      "type": "imported"
+    },
+    "cache_node_2": {
+      "type": "imported"
+    },
+    "cache_node_3": {
+      "type": "imported"
+    },
+    "cache_cluster": {
+      "type": "derived",
+      "rule": "majority_vote",
+      "dependencies": ["cache_node_1", "cache_node_2", "cache_node_3"]
+    },
+    "api_server_1": {
+      "type": "imported"
+    },
+    "api_server_2": {
+      "type": "imported"
+    },
+    "api_server_3": {
+      "type": "imported"
+    },
+    "api_cluster": {
+      "type": "derived",
+      "rule": "threshold_rollup",
+      "params": {
+        "red_threshold": 2,
+        "yellow_to_yellow": 1,
+        "yellow_to_red": 2
+      },
+      "dependencies": ["api_server_1", "api_server_2", "api_server_3"]
+    },
+    "queue_broker_1": {
+      "type": "imported"
+    },
+    "queue_broker_2": {
+      "type": "imported"
+    },
+    "queue_cluster": {
+      "type": "derived",
+      "rule": "worst_status",
+      "dependencies": ["queue_broker_1", "queue_broker_2"]
+    },
+    "auth_service": {
+      "type": "imported"
+    },
+    "payment_service": {
+      "type": "imported"
+    },
+    "notification_service": {
+      "type": "imported"
+    },
+    "microservices": {
+      "type": "derived",
+      "rule": "worst_status",
+      "dependencies": ["auth_service", "payment_service", "notification_service"]
+    },
+    "backend_infrastructure": {
+      "type": "derived",
+      "rule": "threshold_rollup",
+      "params": {
+        "red_threshold": 2,
+        "yellow_to_yellow": 2,
+        "yellow_to_red": 4
+      },
+      "dependencies": ["db_cluster", "cache_cluster", "queue_cluster"]
+    },
+    "application_layer": {
+      "type": "derived",
+      "rule": "worst_status",
+      "dependencies": ["api_cluster", "microservices"]
+    },
+    "cdn_edge_1": {
+      "type": "imported"
+    },
+    "cdn_edge_2": {
+      "type": "imported"
+    },
+    "cdn_edge_3": {
+      "type": "imported"
+    },
+    "cdn_edge_4": {
+      "type": "imported"
+    },
+    "cdn_network": {
+      "type": "derived",
+      "rule": "threshold_rollup",
+      "params": {
+        "red_threshold": 3,
+        "yellow_to_yellow": 2,
+        "yellow_to_red": 4
+      },
+      "dependencies": ["cdn_edge_1", "cdn_edge_2", "cdn_edge_3", "cdn_edge_4"]
+    },
+    "load_balancer_1": {
+      "type": "imported"
+    },
+    "load_balancer_2": {
+      "type": "imported"
+    },
+    "load_balancers": {
+      "type": "derived",
+      "rule": "worst_status",
+      "dependencies": ["load_balancer_1", "load_balancer_2"]
+    },
+    "frontend_delivery": {
+      "type": "derived",
+      "rule": "worst_status",
+      "dependencies": ["cdn_network", "load_balancers"]
+    },
+    "monitoring_prometheus": {
+      "type": "imported"
+    },
+    "monitoring_grafana": {
+      "type": "imported"
+    },
+    "logging_elasticsearch": {
+      "type": "imported"
+    },
+    "logging_kibana": {
+      "type": "imported"
+    },
+    "monitoring_stack": {
+      "type": "derived",
+      "rule": "threshold_rollup",
+      "params": {
+        "red_threshold": 2,
+        "yellow_to_yellow": 1,
+        "yellow_to_red": 3
+      },
+      "dependencies": ["monitoring_prometheus", "monitoring_grafana"]
+    },
+    "logging_stack": {
+      "type": "derived",
+      "rule": "threshold_rollup",
+      "params": {
+        "red_threshold": 1,
+        "yellow_to_yellow": 1,
+        "yellow_to_red": 2
+      },
+      "dependencies": ["logging_elasticsearch", "logging_kibana"]
+    },
+    "observability": {
+      "type": "derived",
+      "rule": "worst_status",
+      "dependencies": ["monitoring_stack", "logging_stack"]
+    },
+    "platform_core": {
+      "type": "derived",
+      "rule": "worst_status",
+      "dependencies": ["backend_infrastructure", "application_layer"]
+    },
+    "platform_delivery": {
+      "type": "derived",
+      "rule": "worst_status",
+      "dependencies": ["frontend_delivery", "platform_core"]
+    },
+    "overall_system_health": {
+      "type": "derived",
+      "rule": "threshold_rollup",
+      "params": {
+        "red_threshold": 1,
+        "yellow_to_yellow": 1,
+        "yellow_to_red": 2
+      },
+      "dependencies": ["platform_delivery", "observability"]
+    }
+  }
+}

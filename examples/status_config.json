@@ -1,0 +1,38 @@
+{
+  "nodes": {
+    "platform_backend": {
+      "dependencies": [
+        "service_db",
+        "service_api",
+        "service_cache",
+        "service_queue"
+      ],
+      "params": {
+        "red_threshold": 2,
+        "yellow_to_red": 3,
+        "yellow_to_yellow": 1
+      },
+      "rule": "threshold_rollup",
+      "type": "derived"
+    },
+    "platform_overall": {
+      "dependencies": [
+        "platform_backend"
+      ],
+      "rule": "worst_status",
+      "type": "derived"
+    },
+    "service_api": {
+      "type": "imported"
+    },
+    "service_cache": {
+      "type": "imported"
+    },
+    "service_db": {
+      "type": "imported"
+    },
+    "service_queue": {
+      "type": "imported"
+    }
+  }
+}
