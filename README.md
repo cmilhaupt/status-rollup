@@ -1,5 +1,10 @@
 # Status Rollup Tree
 
+[![CI](https://github.com/cmilhaupt/status-rollup/actions/workflows/ci.yml/badge.svg)](https://github.com/cmilhaupt/status-rollup/actions/workflows/ci.yml)
+[![PyPI version](https://badge.fury.io/py/status-rollup.svg)](https://badge.fury.io/py/status-rollup)
+[![Python versions](https://img.shields.io/pypi/pyversions/status-rollup.svg)](https://pypi.org/project/status-rollup/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A C++20 library and interactive application for hierarchical status monitoring and rollup. Define complex status trees with configurable rollup rules to aggregate health status from leaf nodes up through intermediate layers to an overall system health metric.
 
 ## Features
@@ -371,6 +376,7 @@ Test coverage:
 - **Unit tests** (16 tests): Rollup rule logic, status conversions, edge cases
 - **Integration tests** (12 tests): StatusTree API, error handling, propagation
 - **Interactive tests** (10 tests): End-to-end command-line interface testing
+- **Python tests** (18 tests): Python bindings functionality, all rollup rules
 
 ## Implementation Details
 
