@@ -97,6 +97,20 @@ jobs:
           cmake --build build --config Release -j
           cd build && ctest -C Release --output-on-failure
 
+      - name: Debug Python package installation (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Write-Host "Checking status_rollup directory contents:"
+          Get-ChildItem -Path status_rollup -Recurse | Select-Object FullName
+          Write-Host "`nTrying to import module:"
+          python -c "import sys; print('Python path:', sys.path)" 2>&1 || true
+          python -c "import status_rollup; print('Success!')" 2>&1 || Write-Host "Import failed - reinstalling package"
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "Reinstalling package..."
+            pip install --force-reinstall --no-deps -e .
+          }
+
       - name: Run Python tests
         run: |
           python -m pytest tests/ -v --tb=short
