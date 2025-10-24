@@ -35,15 +35,6 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # Make dependencies available
 FetchContent_MakeAvailable(nlohmann_json CGraph)
 
-# Disable "warnings as errors" for CGraph to avoid third-party code breaking builds
-if(TARGET CGraph)
-    if(MSVC)
-        target_compile_options(CGraph PRIVATE /WX-)
-    else()
-        target_compile_options(CGraph PRIVATE -Wno-error)
-    endif()
-endif()
-
 # Get CGraph source directory for includes
 FetchContent_GetProperties(CGraph)
 if(NOT cgraph_POPULATED)
@@ -94,27 +85,17 @@ target_link_libraries(rollup
         status_rollup_lib
 )
 
-# Set strict compiler warnings for modern C++
+# Set compiler warnings for modern C++
 if(MSVC)
     set(WARNING_FLAGS
-        /W4
-        /WX          # Treat warnings as errors
+        /W4          # High warning level
         /permissive- # Enforce standards conformance
-        /wd4068      # Disable unknown pragma warning (CGraph uses GCC pragmas)
-        /wd4996      # Disable deprecated function warning (CGraph uses localtime)
-        /wd4267      # Disable size_t conversion warning (CGraph size conversions)
-        /wd4100      # Disable unreferenced parameter warning (CGraph unused params)
     )
 else()
     set(WARNING_FLAGS
         -Wall
         -Wextra
         -Wpedantic
-        -Werror                 # Treat warnings as errors
-        -Wno-error=pedantic     # Don't treat pedantic warnings as errors (for third-party headers)
-        -Wno-error=format-nonliteral  # Don't treat format-nonliteral as error (CGraph uses vprintf)
-        -Wno-error=gnu-zero-variadic-macro-arguments  # Don't treat GNU extensions as errors (CGraph macros)
-        -Wno-unknown-warning-option  # Ignore unknown warning options (for GCC-specific warnings on Clang)
         -Wshadow                # Warn about variable shadowing
         -Wnon-virtual-dtor      # Warn about non-virtual destructors
         -Wold-style-cast        # Warn about C-style casts

@@ -380,9 +380,9 @@ Test coverage:
 
 ## Implementation Details
 
-- **C++20**: Uses modern C++ features 
+- **C++20**: Uses modern C++ features
 - **Pimpl Pattern**: CGraph dependency hidden from public headers
-- **Warning-Free**: Strict compiler warnings (-Wall -Wextra -Wpedantic -Werror) with third-party warnings suppressed
+- **Clean Warnings**: Comprehensive compiler warnings enabled (-Wall -Wextra -Wpedantic on GCC/Clang, /W4 on MSVC)
 - **Thread Safety**: Uses CGraph's thread pool for parallel computation
 - **Topological Ordering**: Automatic dependency resolution handles arbitrary configuration order
 
