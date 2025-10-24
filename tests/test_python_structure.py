@@ -70,7 +70,7 @@ def test_python_package_structure():
     assert "pybind11" in cmake_content, "Missing pybind11 in CMake"
     assert "pybind11_add_module" in cmake_content, "Missing pybind11_add_module"
 
-    print("✓ All Python package structure checks passed")
+    print("[OK] All Python package structure checks passed")
     return True
 
 
@@ -79,8 +79,8 @@ if __name__ == "__main__":
         test_python_package_structure()
         sys.exit(0)
     except AssertionError as e:
-        print(f"✗ Test failed: {e}")
+        print(f"[FAIL] Test failed: {e}")
         sys.exit(1)
     except (OSError, ValueError, RuntimeError) as e:
-        print(f"✗ Unexpected error: {e}")
+        print(f"[ERROR] Unexpected error: {e}")
         sys.exit(1)
