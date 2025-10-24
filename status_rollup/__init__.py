@@ -4,15 +4,13 @@ This package provides tools for building and managing hierarchical status trees
 with configurable rollup rules for aggregating health status from leaf nodes.
 """
 
-from typing import Optional
-
 try:
     from ._status_rollup import (
         Status,
         StatusTree,
-        string_to_status,
-        status_to_string,
         __version__,
+        status_to_string,
+        string_to_status,
     )
 except ImportError as e:
     raise ImportError(
@@ -24,9 +22,9 @@ except ImportError as e:
 __all__ = [
     "Status",
     "StatusTree",
-    "string_to_status",
-    "status_to_string",
     "__version__",
+    "status_to_string",
+    "string_to_status",
 ]
 
 # Add convenience attributes to Status enum

@@ -84,7 +84,7 @@ class TestStatusTreeBasic:
             }
         }
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(config, f)
             config_path = f.name
 
@@ -109,7 +109,7 @@ class TestStatusTreeBasic:
             }
         }
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(config, f)
             config_path = f.name
 
@@ -159,7 +159,7 @@ class TestWorstStatusRule:
             }
         }
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(config, f)
             config_path = f.name
 
@@ -190,7 +190,7 @@ class TestWorstStatusRule:
             }
         }
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(config, f)
             config_path = f.name
 
@@ -220,7 +220,7 @@ class TestWorstStatusRule:
             }
         }
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(config, f)
             config_path = f.name
 
@@ -261,7 +261,7 @@ class TestThresholdRollupRule:
             }
         }
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(config, f)
             config_path = f.name
 
@@ -301,7 +301,7 @@ class TestThresholdRollupRule:
             }
         }
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(config, f)
             config_path = f.name
 

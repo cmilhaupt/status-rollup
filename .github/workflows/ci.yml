@@ -97,6 +97,11 @@ jobs:
           cmake --build build --config Release -j
           cd build && ctest -C Release --output-on-failure
 
+      - name: Reinstall Python package (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          python -m pip install --force-reinstall --no-deps -e .
+
       - name: Run Python tests
         run: |
           python -m pytest tests/ -v --tb=short

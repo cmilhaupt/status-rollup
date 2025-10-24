@@ -61,7 +61,7 @@ def main() -> int:
                 print("Exiting...")
                 break
 
-            elif command == "print":
+            if command == "print":
                 tree.print_statuses()
 
             elif command == "get":
