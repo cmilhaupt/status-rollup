@@ -193,14 +193,16 @@ if(BUILD_TESTS)
     gtest_discover_tests(test_rollup_rules)
     gtest_discover_tests(test_integration)
 
-    # Add shell-based integration test
-    add_test(
-        NAME test_interactive
-        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_interactive.sh
-                $<TARGET_FILE:rollup>
-                ${CMAKE_CURRENT_SOURCE_DIR}/examples/complex_status_config.json
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    )
+    # Add shell-based integration test (Unix only - requires bash)
+    if(NOT WIN32)
+        add_test(
+            NAME test_interactive
+            COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_interactive.sh
+                    $<TARGET_FILE:rollup>
+                    ${CMAKE_CURRENT_SOURCE_DIR}/examples/complex_status_config.json
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        )
+    endif()
 
     # Python tests (if Python bindings are enabled)
     if(BUILD_PYTHON_BINDINGS)
