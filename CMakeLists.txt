@@ -100,6 +100,10 @@ if(MSVC)
         /W4
         /WX          # Treat warnings as errors
         /permissive- # Enforce standards conformance
+        /wd4068      # Disable unknown pragma warning (CGraph uses GCC pragmas)
+        /wd4996      # Disable deprecated function warning (CGraph uses localtime)
+        /wd4267      # Disable size_t conversion warning (CGraph size conversions)
+        /wd4100      # Disable unreferenced parameter warning (CGraph unused params)
     )
 else()
     set(WARNING_FLAGS
@@ -108,6 +112,9 @@ else()
         -Wpedantic
         -Werror                 # Treat warnings as errors
         -Wno-error=pedantic     # Don't treat pedantic warnings as errors (for third-party headers)
+        -Wno-error=format-nonliteral  # Don't treat format-nonliteral as error (CGraph uses vprintf)
+        -Wno-error=gnu-zero-variadic-macro-arguments  # Don't treat GNU extensions as errors (CGraph macros)
+        -Wno-unknown-warning-option  # Ignore unknown warning options (for GCC-specific warnings on Clang)
         -Wshadow                # Warn about variable shadowing
         -Wnon-virtual-dtor      # Warn about non-virtual destructors
         -Wold-style-cast        # Warn about C-style casts
