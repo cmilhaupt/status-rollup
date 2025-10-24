@@ -107,6 +107,7 @@ else()
         -Wextra
         -Wpedantic
         -Werror                 # Treat warnings as errors
+        -Wno-error=pedantic     # Don't treat pedantic warnings as errors (for third-party headers)
         -Wshadow                # Warn about variable shadowing
         -Wnon-virtual-dtor      # Warn about non-virtual destructors
         -Wold-style-cast        # Warn about C-style casts
