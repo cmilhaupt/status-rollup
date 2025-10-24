@@ -35,6 +35,15 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # Make dependencies available
 FetchContent_MakeAvailable(nlohmann_json CGraph)
 
+# Disable "warnings as errors" for CGraph to avoid third-party code breaking builds
+if(TARGET CGraph)
+    if(MSVC)
+        target_compile_options(CGraph PRIVATE /WX-)
+    else()
+        target_compile_options(CGraph PRIVATE -Wno-error)
+    endif()
+endif()
+
 # Get CGraph source directory for includes
 FetchContent_GetProperties(CGraph)
 if(NOT cgraph_POPULATED)
