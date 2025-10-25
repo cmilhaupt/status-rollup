@@ -82,7 +82,10 @@ environment = { MACOSX_DEPLOYMENT_TARGET = "10.15" }
 # Debug before testing - show what's installed and check dynamic dependencies
 before-test = [
     "python -c \"import os, status_rollup; d=os.path.dirname(status_rollup.__file__); print('Module dir:', d); print('Contents:'); [print('  ', f) for f in os.listdir(d)]\"",
-    "otool -L status_rollup/_status_rollup*.so || true"
+    "otool -L status_rollup/_status_rollup*.so || true",
+    "file status_rollup/_status_rollup*.so || true",
+    "python -c \"import sys, platform; print('Python version:', sys.version); print('Platform:', platform.machine())\"",
+    "python -c \"import importlib.util; spec = importlib.util.find_spec('status_rollup._status_rollup'); print('Module spec:', spec)\" || echo 'Module spec lookup failed'"
 ]
 
 # Test the wheel
