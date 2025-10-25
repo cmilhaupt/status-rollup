@@ -72,6 +72,9 @@ skip = ["*-musllinux*", "pp*"]  # Skip musllinux and PyPy for now
 manylinux-x86_64-image = "manylinux_2_28"
 manylinux-aarch64-image = "manylinux_2_28"
 
+# Clean up old .so/.pyd files before each build to avoid conflicts
+before-build = "rm -f status_rollup/*.so status_rollup/*.pyd || true"
+
 # macOS: Set deployment target for C++20 support
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = "10.15" }
