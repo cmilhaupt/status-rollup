@@ -139,14 +139,22 @@ if(BUILD_PYTHON_BINDINGS)
             status_rollup_lib
     )
 
-    # Set module output location (handle multi-config generators on Windows)
-    set_target_properties(_status_rollup PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
-        LIBRARY_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
-        LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
-        LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
-        LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
-    )
+    # Set module output location
+    if(WIN32)
+        # Windows uses multi-config generators, need to set all configurations
+        set_target_properties(_status_rollup PROPERTIES
+            LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
+            LIBRARY_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
+            LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
+            LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
+            LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
+        )
+    else()
+        # Unix/macOS: single-config generator
+        set_target_properties(_status_rollup PROPERTIES
+            LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/status_rollup"
+        )
+    endif()
 
     # Install the module
     install(TARGETS _status_rollup LIBRARY DESTINATION status_rollup)
