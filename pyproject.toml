@@ -79,8 +79,11 @@ before-build = "rm -f status_rollup/*.so status_rollup/*.pyd || true"
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = "10.15" }
 
-# Debug before testing - show what's installed
-before-test = "python -c \"import os, status_rollup; d=os.path.dirname(status_rollup.__file__); print('Module dir:', d); print('Contents:'); [print('  ', f) for f in os.listdir(d)]\""
+# Debug before testing - show what's installed and check dynamic dependencies
+before-test = [
+    "python -c \"import os, status_rollup; d=os.path.dirname(status_rollup.__file__); print('Module dir:', d); print('Contents:'); [print('  ', f) for f in os.listdir(d)]\"",
+    "otool -L status_rollup/_status_rollup*.so || true"
+]
 
 # Test the wheel
 test-command = "python -c \"import status_rollup; print(status_rollup.__version__)\""
