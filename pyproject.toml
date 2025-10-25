@@ -76,6 +76,9 @@ manylinux-aarch64-image = "manylinux_2_28"
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = "10.15" }
 
+# Debug before testing - show what's installed
+before-test = "python -c \"import os, status_rollup; d=os.path.dirname(status_rollup.__file__); print('Module dir:', d); print('Contents:'); [print('  ', f) for f in os.listdir(d)]\""
+
 # Test the wheel
 test-command = "python -c \"import status_rollup; print(status_rollup.__version__)\""
 test-requires = ["pytest"]
