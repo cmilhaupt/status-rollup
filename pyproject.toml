@@ -73,7 +73,9 @@ manylinux-x86_64-image = "manylinux_2_28"
 manylinux-aarch64-image = "manylinux_2_28"
 
 # Clean up old .so/.pyd files before each build to avoid conflicts
-before-build = "rm -f status_rollup/*.so status_rollup/*.pyd || true"
+before-build = [
+    "rm -f status_rollup/_status_rollup*.so status_rollup/*.pyd status_rollup/*.dylib 2>/dev/null || true"
+]
 
 # macOS: Set deployment target for C++20 support
 [tool.cibuildwheel.macos]
